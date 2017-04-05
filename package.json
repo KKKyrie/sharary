@@ -4,7 +4,8 @@
   "description": "A book-sharing platform.",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "env ENV_MODE=dev webpack-dev-server --hot --inline --progress --colors",
+    "deploy": "rm -rf dist && webpack --config webpack.prod.config.js --progress --colors"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,22 @@
   "bugs": {
     "url": "https://github.com/KKKyrie/sharary/issues"
   },
-  "homepage": "https://github.com/KKKyrie/sharary#readme"
+  "homepage": "https://github.com/KKKyrie/sharary#readme",
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "css-loader": "^0.28.0",
+    "eslint": "^3.19.0",
+    "eslint-loader": "^1.7.1",
+    "vue-loader": "^11.3.4",
+    "vue-template-compiler": "^2.2.6",
+    "webpack": "^2.3.3",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "dependencies": {
+    "vue": "^2.2.6",
+    "vue-router": "^2.3.1"
+  }
 }

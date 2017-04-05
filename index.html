@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="icon" href="favicon.ico">
+		<link rel="stylesheet" href="style/normalize.css">
+		<script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+		<script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>sharary</title>
+	</head>
+	<body>
+		<div id="app" class="container-fluid">
+			<div class="header">
+				<ul class="router">
+					<li class="address"><router-link to="/">主页</router-link></li>
+					<li class="address"><router-link to="/notice">消息</router-link></li>
+					<li class="address"><router-link to="/user">个人</router-link></li>
+					<li class="name"><router-link to="/user">kyrieliu</router-link></li>
+				</ul>
+			</div>
+			<router-view></router-view>
+			<div class="footer">footer</div>
+		</div>
+
+		<!-- if mobile? start -->
+		<script>
+			function isPhone() {
+			    var flag = false;
+			    var userAgentInfo = navigator.userAgent;
+			    var Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+			    for (var i = 0; i < Agents.length; i++) {
+			        if (userAgentInfo.indexOf(Agents[i]) > 0) {
+			            flag = true;
+			            break;
+			        }
+			    }
+			    return flag;
+			}
+
+			if (isPhone()){
+				$('body').html('请用 PC 访问本网站');
+			}
+		</script>
+		<!-- if mobile? ends -->
+
+		<script src='./dist/bundle.js'></script>
+	</body>
+</html>
