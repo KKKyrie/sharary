@@ -73,7 +73,7 @@
 	.row-1{
 		display: flex;
 		-webkit-display: flex;
-		justify-content: space-around;
+		justify-content: space-start;
 	}
 
 
