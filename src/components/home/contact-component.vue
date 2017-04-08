@@ -64,7 +64,6 @@
 	.contact-dialog{
 		margin: 5px auto;
 		width: 70%;
-		border: 1px solid black;
 	}
 
 	.input-area{

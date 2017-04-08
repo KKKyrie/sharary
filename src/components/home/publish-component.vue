@@ -1,5 +1,9 @@
 <template>
 	<div class="container-fluid">
+		<div class="row btn-area">
+			<button class="btn pull-right hide-btn" @click="hidePublish"><span class="glyphicon glyphicon-minus" style="color: white"></span></button>
+			<button class="btn pull-right show-btn" @click="showPublish"><span class="glyphicon glyphicon-plus" style="color: white"></span></button>
+		</div>
 		<div class="row">
 			<div class="publish-container col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
 				<!-- row 1 -->
@@ -59,18 +63,45 @@
 				shareType: 1,
 				price: ''
 			}
+		},
+
+		methods: {
+			showPublish(){
+				$('.publish-container').show(300);
+				$('.show-btn').hide(300);
+				$('.hide-btn').show(300);
+			},
+
+			hidePublish(){
+				$('.publish-container').hide(300);
+				$('.hide-btn').hide(300);
+				$('.show-btn').show(300);
+			}
 		}
 	}
 </script>
 
 <style scoped>
 
+	.btn-area{
+		margin-bottom: 5px;
+	}
 
+	.hide-btn{
+		background-color: #ae2e2e;
+		margin-left: 5px;
+		display: none;
+	}
+
+	.show-btn{
+		background-color: #42b983;
+	}
 
 	.publish-container{
 		border: 1px solid #ccc;
 		padding: 20px 20px;
 		position: relative;
+		display: none;
 	}
 
 	.row-1{
