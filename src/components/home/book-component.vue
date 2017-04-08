@@ -1,11 +1,11 @@
 <template>
-	<div class="book-container">
-		<!-- 左上角标志 -->
+	<div class="book-container container-fluid">
+		<!-- 右上角标志 -->
 		<CornerComponent></CornerComponent>
 
 		<!-- 头部区域 -->
 		<div class="title-area">
-			<h2>《深入 React 技术栈》</h2>
+			<h3>《深入 React 技术栈》</h3>
 			<span>&nbsp;|&nbsp;</span>
 			
 			<!-- 标签区域 -->
@@ -49,7 +49,7 @@
 		overflow: hidden;
 	}
 
-	h2,
+	h3,
 	h4{
 		display: inline-block;
 	}

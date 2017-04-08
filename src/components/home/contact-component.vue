@@ -11,6 +11,7 @@
 			&nbsp;
 			<span class="glyphicon glyphicon-send send-btn" title="发送"></span>
 		</div>
+
 	</div>
 	
 </template>
@@ -59,13 +60,15 @@
 		margin: 10px 5px;
 	}
 
+
 	.contact-dialog{
 		margin: 5px auto;
-		width: 61.8%;
+		width: 70%;
+		border: 1px solid black;
 	}
 
 	.input-area{
-		width: 90%;
+		width: 80%;
 		display: inline-block;
 	}
 
