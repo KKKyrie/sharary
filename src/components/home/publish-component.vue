@@ -16,15 +16,15 @@
 						</select>
 					</span>
 
-					<span class="col-lg-3 col-md-3 col-sm-3 col-xs-6"><label for="bookName">书名：</label><input class="form-control inline-element padding-control" type="text" v-model="bookName" placeholder="无需添加书名号" /></span>
-					<span class="col-lg-3 col-md-3 col-sm-3 col-xs-6"><label for="tags">分类：</label><input class="form-control inline-element padding-control" type="text" v-model="tags" placeholder="计算机；互联网" /></span>
+					<span class="col-lg-3 col-md-3 col-sm-3 col-xs-6"><label for="bookName">书名：</label><input class="form-control inline-element padding-control" type="text" v-model.trim="bookName" placeholder="无需添加书名号" /></span>
+					<span class="col-lg-3 col-md-3 col-sm-3 col-xs-6"><label for="tags">分类：</label><input class="form-control inline-element padding-control" type="text" v-model.trim="tags" placeholder="计算机；互联网" /></span>
 				</div>
 					
 				<!-- row 2 -->
 				<div class="row">
 					<span class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<label for="message">留言：</label>
-						<input name="message" type="text" class="form-control description" v-model="message" placeholder="谈谈你对这本书的感受 / 你为什么想要这本书？">
+						<input name="message" type="text" class="form-control description" v-model.trim="message" placeholder="谈谈你对这本书的感受 / 你为什么想要这本书？">
 					</span>
 				</div>
 					
@@ -37,7 +37,7 @@
 							<option value="1">我要交易</option>
 						</select>	
 					</span>
-					<span v-if="shareType == 1" class="col-lg-2"><label for="">期望价格（元）:</label><input type="text" class="form-control inline-element price" placeholder="0" v-model="price"></span>
+					<span v-if="shareType == 1" class="col-lg-2"><label for="">期望价格（元）:</label><input type="text" class="form-control inline-element price" placeholder="0" v-model.trim.number="price"></span>
 				</div>
 
 				<div class="row-4">
@@ -76,6 +76,12 @@
 				$('.publish-container').hide(300);
 				$('.hide-btn').hide(300);
 				$('.show-btn').show(300);
+			}
+		},
+
+		watch: {
+			price(val, preVal){
+				console.log('之前：'+ preVal + ', 之后: ' + val);
 			}
 		}
 	}

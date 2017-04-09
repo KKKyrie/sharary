@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>Sharary | Login</title>
+        <link rel="stylesheet" href="style/normalize.css">
+		<script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+		<script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+        <link rel="stylesheet" type="text/css" href="style/login.css">
+
+    </head>
+    <body>
+        <div class="container-fluid">
+                 <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2 main">
+                     <div class="header">
+                        <p><img src="./logo.png" class="img-circle"></p>
+                     </div>
+                     <div class="title">
+                         <h1><a href="" target="_self" id="title_name">Sharary</a></h1>
+                     </div>
+                     <hr class="splitline_25" />
+                     <div class="desc">
+                         <p><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;西北大学图书共享平台</span></p>
+                     </div>
+                     <hr class="splitline_50" />
+                     <div class="sns">
+                     	<div class="row">
+                     		<div class="col-md-8 col-md-offset-2">
+                     			<input type="text" class="form-control" placeholder="用户名" id="username" />
+                     		</div>
+                     	</div>
+                     	<div class="row" style="margin-top: 5px;">
+                     		<div class="col-md-8 col-md-offset-2">
+                     			<input type="password" class="form-control" placeholder="密码" id="password" />
+                     		</div>
+                     	</div>
+                     	<div class="row" style="margin-top: 5px;">
+                     		<div class="col-md-8 col-md-offset-2">
+                     			<input type="checkbox" id="checkbox" />
+                     			<span class="checkbox-text">我已阅读并了解<a href="" class="info">《Sharary使用声明》</a></span>
+                     		</div>
+                     	</div>
+                     </div>
+                     <div class="links">
+                        <p>
+                            <a target="_self" class="btn" id="btn" disabled>Enter</a> 
+                        </p>
+                     </div>
+                     <hr class="splitline_75" />
+
+                     <div class="copyright">
+                         <p>Made with <span class="glyphicon glyphicon-heart" style="color: #ae2e2e;"></span> by 劉凯里 <span class="glyphicon glyphicon-fire"></span></p>
+                     </div>
+                 </div>
+        </div>
+
+
+        <script src="./scripts/login.js"></script>
+    </body>
+</html>
