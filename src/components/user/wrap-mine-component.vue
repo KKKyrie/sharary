@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="wrap-container col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
-				<BookComponent page="home"></BookComponent>
+				<BookComponent page="user"></BookComponent>
 			</div>
 		</div>
 	</div>
@@ -10,7 +10,7 @@
 
 <script>
 	
-	import BookComponent from './book-component.vue';
+	import BookComponent from '../home/book-component.vue';
 
 	export default {
 
@@ -22,7 +22,7 @@
 <style scoped>
 	
 	.wrap-container{
-		margin-top: 10px;
+		margin-top: 30px;
 		margin-bottom: 30px;
 		border: 1px solid #ccc;
 		padding: 20px;

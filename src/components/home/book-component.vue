@@ -3,6 +3,8 @@
 		<!-- 右上角标志 -->
 		<CornerComponent></CornerComponent>
 
+
+
 		<!-- 头部区域 -->
 		<div class="title-area">
 			<h3>《深入 React 技术栈》</h3>
@@ -10,6 +12,9 @@
 			
 			<!-- 标签区域 -->
 			<WrapTagsComponent></WrapTagsComponent>
+
+			<!-- 删除按钮 -->
+			<button class="btn delete-btn pull-right" v-if="page === 'user'">删除</button>
 		</div>
 		
 		<!-- 用户留言区 -->
@@ -22,7 +27,7 @@
 		<span class="share-type">共享方式：交易（90元）</span>
 
 		<!-- 联系区域 -->
-		<ContactComponent></ContactComponent>
+		<ContactComponent v-if="page ==='home'"></ContactComponent>
 
 	</div>
 </template>
@@ -33,6 +38,9 @@
 	import ContactComponent from './contact-component.vue';
 	
 	export default {
+
+		props: ['page'],
+
 		components: { CornerComponent, WrapTagsComponent, ContactComponent }
 	}
 
@@ -72,6 +80,13 @@
 		font-size: 15px;
 		font-weight: bold;
 		color: #42b983;
+	}
+
+	.delete-btn{
+		display: inline-block;
+		color: white;
+		background-color: #ae2e2e;
+		margin-right: 5%;
 	}
 
 </style>
