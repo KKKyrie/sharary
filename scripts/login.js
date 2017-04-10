@@ -23,6 +23,8 @@ var Login = function() {
 	this.$username = $('#username');
 	this.$password = $('#password');
 	this.$checkbox = $('#checkbox');
+	this.$warning = $('.alert-warning');
+	this.$danger = $('.alert-danger');
 	this.$btn = $('#btn');
 
 	this.usernameExist = false;
@@ -40,33 +42,44 @@ Login.prototype = {
 
 		var that = this;
 
+		// username checking
 		this.$username.on('blur', function() {
 			var _username = that.$username.val().trim();
 
 			that.usernameExist = that._checkNotEmpty(_username);
 			that.usernameLegal = that._checkLegal(_username);
 
-			// that._checkBtn();
+		}).on('focus', function(){
+			that._cancelChecked();
 		});
 
+		// password checking
 		this.$password.on('blur', function() {
 			var _password = that.$password.val().trim();
 
 			that.passwordExist = that._checkNotEmpty(_password);
 			that.passwordLegal = that._checkLegal(_password);
 
-			// that._checkBtn();
+		}).on('focus', function(){
+			that._cancelChecked();
 		});
 
+		// login btn availability checking
 		this.$checkbox.on('click', function(){
 			that.isChecked = that.$checkbox.is(':checked');
 
 			that._checkBtn();
 		});
+
+
+		this.$btn.on('click', function(){
+			that._login();
+		});
+
 	},
 
 
-	// 检查用户输入字符的安全性，防止 XSS
+	// prevent xss
 	_checkLegal: function(input) {
 
 		var patern = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im;
@@ -76,20 +89,18 @@ Login.prototype = {
 		// return !_result;
 
 		if (_result){
-			console.log("danger!");
+			this.$danger.show(500).delay(2500).hide(500);
 			return false;
 		}else{
 			return true;
 		}
 	},
 
-	// 非空校验
+	// not-empty checking
 	_checkNotEmpty: function(input) {
 		
 		if (input === '') {
-			
-			console.log('empty!');
-			
+			this.$warning.show(500).delay(2500).hide(500);	
 			return false;
 
 		} else {
@@ -99,16 +110,40 @@ Login.prototype = {
 		}
 	},
 
-	// 按钮可用？
+	
+	_cancelChecked: function(){
+
+		var that = this;
+
+		that.isChecked = false;
+		that.$checkbox.prop('checked', false);
+		that._hideBtn();
+	},
+
+	// is btn available?
 	_checkBtn: function(){
 
 		var that = this;
 
 		if (that.usernameExist && that.usernameLegal && that.passwordExist && that.passwordLegal && that.isChecked){
-			that.$btn.attr('disabled', false);
+			that._showBtn();
 		}else{
-			that.$btn.attr('disabled', true);
+			that._hideBtn();
 		}
+	},
+
+	_showBtn: function(){
+		this.$btn.css('visibility', 'visible');
+	},
+
+	_hideBtn: function(){
+		this.$btn.css('visibility', 'hidden');
+	},
+
+
+	// login
+	_login: function(){
+		console.log('login');
 	}
 
 };
