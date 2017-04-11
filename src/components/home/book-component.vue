@@ -10,8 +10,7 @@
 			<h3>《深入 React 技术栈》</h3>
 			<span>&nbsp;|&nbsp;</span>
 			
-			<!-- 标签区域 -->
-			<WrapTagsComponent></WrapTagsComponent>
+			<span class="date">2017年3月1日 07:15</span>
 
 			<!-- 删除按钮 -->
 			<button class="btn delete-btn pull-right" v-if="page === 'user'">删除</button>
@@ -33,15 +32,15 @@
 </template>
 
 <script>
+
 	import CornerComponent from './corner-component.vue';
-	import WrapTagsComponent from './wrap-tags-component.vue';
 	import ContactComponent from './contact-component.vue';
 	
 	export default {
 
 		props: ['page'],
 
-		components: { CornerComponent, WrapTagsComponent, ContactComponent }
+		components: { CornerComponent, ContactComponent }
 	}
 
 </script>
