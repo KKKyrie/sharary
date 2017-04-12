@@ -180,7 +180,7 @@ Login.prototype = {
 		};
 
 		$.ajax({
-			url: '../php/handle_login.php',
+			url: './php/handle_login.php',
 			type: 'POST',
 			data: loginData,
 			async: true,
@@ -212,6 +212,7 @@ Login.prototype = {
 
 			},
 			error: function(){
+				that.$btn.button('reset');
 				console.log('error');
 			}
 		});
