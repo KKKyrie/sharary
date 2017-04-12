@@ -34,7 +34,7 @@
 				        		<span class="icon-bar"></span>
 				        		<span class="icon-bar"></span>
 				      		</button>
-				      		<a class="navbar-brand" href="#"><span class="glyphicon glyphicon-book" style="margin-right: 5px;"></span>Sharary</a>
+				      		<a class="navbar-brand" href="#"><span class="glyphicon glyphicon-book" style="margin-right: 5px;"></span>Sharary | <span id="username" class="glyphicon glyphicon-user"></span></a>
 				    	</div>
 
 					    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -63,6 +63,8 @@
 					localStorage.removeItem('_username');
 					location.href = './login.html';
 				});
+
+				$('#username').text(localStorage.getItem('_username'));
 			});
 		</script>
 		<script src='./dist/bundle.js'></script>

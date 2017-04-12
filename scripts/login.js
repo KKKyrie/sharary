@@ -28,6 +28,8 @@ var Login = function() {
 
 	this.usernameExist = false;
 	this.passwordExist = false;
+	this.usernameLimit = false;
+	this.passwordLimit = false;
 
 	this.usernameLegal = false;
 	this.passwordLegal = false;
@@ -47,6 +49,7 @@ Login.prototype = {
 
 			that.usernameExist = that._checkNotEmpty(_username);
 			that.usernameLegal = that._checkLegal(_username);
+			that.usernameLimit = that._checkLength(_username);
 
 		}).on('focus', function(){
 			that._cancelChecked();
@@ -58,6 +61,7 @@ Login.prototype = {
 
 			that.passwordExist = that._checkNotEmpty(_password);
 			that.passwordLegal = that._checkLegal(_password);
+			that.passwordLimit = that._checkLength(_password);
 
 		}).on('focus', function(){
 			that._cancelChecked();
@@ -81,6 +85,8 @@ Login.prototype = {
 	// prevent xss
 	_checkLegal: function(input) {
 
+		var that = this;
+
 		var patern = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im;
 
 		var _result = patern.test(input);
@@ -88,7 +94,7 @@ Login.prototype = {
 		// return !_result;
 
 		if (_result){
-			this.$warning.text('你的输入含有非法字符！').show('fast').delay(2500).hide('fast');
+			that._checkFail('你的输入含有非法字符！', that);
 			return false;
 		}else{
 			return true;
@@ -97,9 +103,11 @@ Login.prototype = {
 
 	// not-empty checking
 	_checkNotEmpty: function(input) {
+
+		var that = this;
 		
 		if (input === '') {
-			this.$warning.text('你的输入为空！').show('fast').delay(2500).hide('fast');	
+			that._checkFail('你的输入为空！', that);
 			return false;
 
 		} else {
@@ -107,6 +115,23 @@ Login.prototype = {
 			return true;
 		
 		}
+	},
+
+	_checkLength: function(input){
+		var that = this;
+
+		var length = input.length;
+
+		if (length > 20){
+			that._checkFail('长度超过限制，最多输入20位！', that);
+			return false;
+		}else{
+			return true;
+		}
+	},
+
+	_checkFail: function(errorInfo, _that){
+		_that.$warning.text(errorInfo).show('fast').delay(2500).hide('fast');
 	},
 
 	
@@ -124,7 +149,7 @@ Login.prototype = {
 
 		var that = this;
 
-		if (that.usernameExist && that.usernameLegal && that.passwordExist && that.passwordLegal && that.isChecked){
+		if (that.usernameExist && that.usernameLegal && that.passwordExist && that.passwordLegal && that.usernameLimit && that.passwordLimit && that.isChecked){
 			that._showBtn();
 		}else{
 			that._hideBtn();
@@ -212,7 +237,7 @@ Login.prototype = {
 
 		var _username = _that.$username.val().trim();
 		localStorage.setItem('_username', _username);
-		// location.href = './';
+		location.href = './';
 	}
 
 };

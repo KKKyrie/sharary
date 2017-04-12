@@ -14,7 +14,8 @@
 
 	$username = @$_POST["username"];
 	$password = @$_POST["password"];
-	$_password = md5($password, false);
+	$salt = "allincle-strive4greatness";
+	$_password = md5($password.$salt, false);
 
 	mysql_query("set character set 'utf8'");  
 	mysql_query("set names 'utf8'");
