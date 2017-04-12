@@ -23,8 +23,7 @@ var Login = function() {
 	this.$username = $('#username');
 	this.$password = $('#password');
 	this.$checkbox = $('#checkbox');
-	this.$warning = $('.alert-warning');
-	this.$danger = $('.alert-danger');
+	this.$warning = $('.warning');
 	this.$btn = $('#btn');
 
 	this.usernameExist = false;
@@ -89,7 +88,7 @@ Login.prototype = {
 		// return !_result;
 
 		if (_result){
-			this.$danger.show(500).delay(2500).hide(500);
+			this.$warning.text('你的输入含有非法字符！').show('fast').delay(2500).hide('fast');
 			return false;
 		}else{
 			return true;
@@ -100,7 +99,7 @@ Login.prototype = {
 	_checkNotEmpty: function(input) {
 		
 		if (input === '') {
-			this.$warning.show(500).delay(2500).hide(500);	
+			this.$warning.text('你的输入为空！').show('fast').delay(2500).hide('fast');	
 			return false;
 
 		} else {
@@ -143,7 +142,77 @@ Login.prototype = {
 
 	// login
 	_login: function(){
-		console.log('login');
+
+		var that = this;
+
+		// loading effect
+		that.$btn.button('loading');
+
+
+		var loginData = {
+			username: that.$username.val().trim(),
+			password: that.$password.val().trim()
+		};
+
+		$.ajax({
+			url: '../php/handle_login.php',
+			type: 'POST',
+			data: loginData,
+			async: true,
+			timeout: 3000,
+			success: function(response){
+				
+				switch(response){
+					case '-3':
+						that._loginFail('注册失败，再试试？',that);
+						break;
+					case '-2':
+						that._loginFail('密码验证失败，再试试？', that);
+						break;
+					case '-1':
+						that._loginFail('服务器开小差了，再试试？', that);
+						break;
+					case '0':
+						that._loginFail('用户名或密码不正确，请重新输入！', that);
+						break;
+					case '1':
+						that._loginSuccess(that);
+						break;
+					case '2':
+						that._loginSuccess(that);
+						break;
+					default:
+						that._loginFail('出现了一点意外，请联系劉凯里 :)', that);
+				}
+
+			},
+			error: function(){
+				console.log('error');
+			}
+		});
+	},
+
+	// 登录失败
+	_loginFail: function(errorInfo, _that){
+		/*
+			1. 提示失败信息 
+		*/
+		_that.$btn.button('reset');
+		_that.$warning.text(errorInfo).show('fast').delay(2500).hide('fast');
+	},
+
+	// 登录成功
+	_loginSuccess: function(_that){
+		/*
+			1. 存 localstorage
+			2. 跳转
+		*/
+
+		_that.$btn.button('reset');
+
+		var _username = _that.$username.val().trim();
+		localStorage.setItem('_username', _username);
+		// location.href = './';
 	}
 
 };

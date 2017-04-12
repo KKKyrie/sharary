@@ -10,7 +10,7 @@
             (function(){
                 var _username = localStorage.getItem('_username');
                 if (_username){
-                    window.location.href = './';
+                    location.href = './';
                 }
             })();
         </script>
@@ -62,8 +62,7 @@
                     <div class="sns">
                     	<div class="row">
                     		<div class="col-md-8 col-md-offset-2">
-                    			<div class="alert alert-warning" role="alert" style="display: none; text-align: center;">你的输入为空 :(</div>
-                    			<div class="alert alert-danger" role="alert" style="display: none; text-align: center;">你的输入含有<span style="font-weight: bold;">非法字符</span> :(</div>
+                    			<p class="warning"></p>
                     		</div>
                     	</div>
                        	<div class="row">
@@ -85,7 +84,7 @@
                     </div>
                     <div class="links">
                         <p>
-                            <a target="_self" class="btn" id="btn" style="visibility: hidden;">Enter</a> 
+                            <a target="_self" class="btn" id="btn" style="visibility: hidden;" data-loading-text="身份验证中..."><span class="glyphicon glyphicon-hand-right"></span>&nbsp;开始共享&nbsp;<span class="glyphicon glyphicon-hand-left"></span></a> 
                         </p>
                     </div>
                     <hr class="splitline_75" />

@@ -151,3 +151,9 @@ body {
     text-decoration: underline;
 }
 
+.warning{
+    display: none;
+    color: #ae2e2e;
+    font-weight: bold;
+}
+
