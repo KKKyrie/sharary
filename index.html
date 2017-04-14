@@ -6,7 +6,8 @@
 		<script>
 			(function(){
 				var _username = localStorage.getItem('_username');
-				if (!_username){
+				var _token = localStorage.getItem('_token');
+				if (!_username || !_token){
 					location.href = './login.html';
 				}
 			})();
@@ -61,10 +62,9 @@
 			$(function(){
 				$('#logout_btn').on('click', function(){
 					localStorage.removeItem('_username');
+					localStorage.removeItem('_token');
 					location.href = './login.html';
 				});
-
-				$('#username').text(localStorage.getItem('_username'));
 			});
 		</script>
 		<script src='./dist/bundle.js'></script>
