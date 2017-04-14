@@ -10,6 +10,14 @@
 
 	*/
 
+	/*
+		改变返回的结构
+		{
+			'ret' => '-3',
+			'token' => ''
+		}
+	*/ 
+
 	require_once("./mysql_connect.php");
 
 	$username = @$_POST["username"];
@@ -25,9 +33,12 @@
 	$sql_find_username = "select * from t_users where username = '$username'";
 	$find_username = @mysql_query($sql_find_username);
 
+	$response = (object)array();
+
 	// 查询用户失败
 	if (!$find_username){
-		die('-1');
+		$response -> ret = '-1';
+		die(json_encode($response));
 	}
 
 
@@ -42,17 +53,21 @@
 		
 		// 查询用户密码失败
 		if (!$find_password){
-			die('-2');
+			$response -> ret = '-2';
+			die(json_encode($response));
 		}
 
 		$find_password_result = @mysql_fetch_assoc($find_password)["password"];
 
 		if ($_password != $find_password_result){
 			// 密码错误，登录失败
-			die('0');
+			$response -> ret = '0';
+			die(json_encode($response));
 		}else{
 			// 密码正确，登录成功
-			die('1');
+			$response -> ret = '1';
+			$response -> token = $_password;
+			die(json_encode($response));
 		}
 
 		
@@ -65,10 +80,13 @@
 
 		if (!$add){
 			// 注册失败
-			die('-3');
+			$response -> ret = '-3';
+			die(json_encode($response));
 		}else{
 			// 注册成功
-			die('2');
+			$response -> ret = '2';
+			$response -> token = $password;
+			die(json_encode($response));
 		}
 	}
 

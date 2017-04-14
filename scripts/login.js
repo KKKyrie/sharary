@@ -185,9 +185,11 @@ Login.prototype = {
 			data: loginData,
 			async: true,
 			timeout: 3000,
-			success: function(response){
+			success: function(_response){
+
+				var response = JSON.parse(_response);
 				
-				switch(response){
+				switch(response.ret){
 					case '-3':
 						that._loginFail('注册失败，再试试？',that);
 						break;
@@ -201,10 +203,10 @@ Login.prototype = {
 						that._loginFail('用户名或密码不正确，请重新输入！', that);
 						break;
 					case '1':
-						that._loginSuccess(that);
+						that._loginSuccess(that, response.token);
 						break;
 					case '2':
-						that._loginSuccess(that);
+						that._loginSuccess(that, response.token);
 						break;
 					default:
 						that._loginFail('出现了一点意外，请联系劉凯里 :)', that);
@@ -228,7 +230,7 @@ Login.prototype = {
 	},
 
 	// 登录成功
-	_loginSuccess: function(_that){
+	_loginSuccess: function(_that, token){
 		/*
 			1. 存 localstorage
 			2. 跳转
@@ -238,6 +240,7 @@ Login.prototype = {
 
 		var _username = _that.$username.val().trim();
 		localStorage.setItem('_username', _username);
+		localStorage.setItem('_token', token);
 		location.href = './';
 	}
 
