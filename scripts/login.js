@@ -28,6 +28,7 @@ var Login = function() {
 
 	this.usernameExist = false;
 	this.passwordExist = false;
+	
 	this.usernameLimit = false;
 	this.passwordLimit = false;
 

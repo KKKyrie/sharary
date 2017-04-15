@@ -19,6 +19,7 @@
                 switch (response.ret) {
                     case '1':
                         console.log('自动登录成功');
+                        location.href = './';
                         break;
                     case '0':
                         console.warn('localStorage 伪造用户名!');

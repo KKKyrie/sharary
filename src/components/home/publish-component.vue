@@ -6,6 +6,7 @@
 		</div>
 		<div class="row">
 			<div class="publish-container col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+				<div class="alert alert-danger" role="alert" style="display: none;">输入不完整或含有非法字符！</div>
 				<!-- row 1 -->
 				<div class="row-1 row">
 					<span class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
@@ -17,14 +18,14 @@
 					</span>
 
 					<span class="col-lg-3 col-md-3 col-sm-3 col-xs-6"><label for="bookName">书名：</label><input class="form-control inline-element padding-control" type="text" v-model.trim="bookName" placeholder="无需添加书名号" /></span>
-					<span class="col-lg-3 col-md-3 col-sm-3 col-xs-6"><label for="tags">分类：</label><input class="form-control inline-element padding-control" type="text" v-model.trim="tags" placeholder="计算机；互联网" /></span>
+					<!-- <span class="col-lg-3 col-md-3 col-sm-3 col-xs-6"><label for="tags">分类：</label><input class="form-control inline-element padding-control" type="text" v-model.trim="tags" placeholder="计算机；互联网" /></span> -->
 				</div>
 					
 				<!-- row 2 -->
 				<div class="row">
 					<span class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<label for="message">留言：</label>
-						<input name="message" type="text" class="form-control description" v-model.trim="message" placeholder="谈谈你对这本书的感受 / 你为什么想要这本书？">
+						<input name="message" type="text" class="form-control description" v-model.trim="message" placeholder="谈谈你对这本书的感受 / 你为什么想要这本书？" />
 					</span>
 				</div>
 					
@@ -41,7 +42,7 @@
 				</div>
 
 				<div class="row-4">
-					<button class="btn btn-success">发布</button>
+					<button class="btn btn-success" @click="publish">发布</button>
 					<span>&nbsp;&nbsp;&nbsp;</span>
 					<button class="btn btn-default">取消</button>
 				</div>
@@ -58,7 +59,6 @@
 			return {
 				infoType: 0,
 				bookName: '',
-				tags: '',
 				message: '',
 				shareType: 1,
 				price: ''
@@ -76,6 +76,62 @@
 				$('.publish-container').hide(300);
 				$('.hide-btn').hide(300);
 				$('.show-btn').show(300);
+			},
+
+			// check xss
+			checkLegal(input){
+
+				let patern = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im;
+
+				let _result = patern.test(input);
+
+				return _result ? false : true;
+			},
+
+			// check empty
+			checkFilled(input){
+				return input == '' ? false : true;
+			},
+
+			checkAvailable(){
+				/*
+					1. 非空
+					2. 合法性
+				*/
+				let checkFilled = this.checkFilled;
+				let checkLegal = this.checkLegal;
+
+				if (this.shareType == 1){
+					// bookname & message & price
+					let isEmpty = checkFilled(this.bookName) && checkFilled(this.message) && checkFilled(this.price);
+					let isLegal = checkLegal(this.bookName) && checkLegal(this.message) && checkLegal(this.price);
+
+					return isEmpty && isLegal ? true : false;
+
+				} else {
+					// bookname & message
+					let isEmpty = checkFilled(this.bookName) && checkFilled(this.message);
+					let isLegal = checkLegal(this.bookName) && checkLegal(this.message);
+					
+					return isEmpty && isLegal ? true : false;
+				}
+			},
+
+			publish(){
+				/*
+					1. 通过检验
+					2. 发布
+				*/
+
+				let available = this.checkAvailable();
+				if (!available){
+					$('.alert-danger').show('fast').delay(2500).hide('fast');
+					return;
+				}
+
+				console.log('publish !');
+
+				
 			}
 		},
 
@@ -108,7 +164,8 @@
 		border: 1px solid #ccc;
 		padding: 20px 20px;
 		position: relative;
-		display: none;
+		/* when done, switch to none ↓*/
+		display: block;
 	}
 
 	.row-1{
