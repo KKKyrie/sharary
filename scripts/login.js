@@ -217,6 +217,7 @@ Login.prototype = {
 			error: function(){
 				that.$btn.button('reset');
 				console.log('error');
+				alert('登录请求发送失败，请联系劉凯里 :)');
 			}
 		});
 	},

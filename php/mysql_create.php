@@ -45,7 +45,8 @@
 		bookname varchar(30) not null,
 		description varchar(250) not null,
 		share_type int(1) not null,
-		info_type int(1) not null 
+		info_type int(1) not null,
+		price varchar(15) not null default 0
 	)ENGINE=InnoDB DEFAULT CHARSET="utf8"');
 
 	if (!$create_table_books){

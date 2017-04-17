@@ -6,7 +6,9 @@
 		</div>
 		<div class="row">
 			<div class="publish-container col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
-				<div class="alert alert-danger" role="alert" style="display: none;">输入不完整或含有非法字符！</div>
+				<div class="alert alert-danger" role="alert" style="display: none;" id="input_danger">你的输入不合法！（输入不完整、长度过长或含有非法字符）</div>
+				<div class="alert alert-danger" role="alert" style="display: none;" id="publish_fail"></div>
+				<div class="alert alert-success" role="alert" style="display: none;" id="publish_success">发布成功</div>
 				<!-- row 1 -->
 				<div class="row-1 row">
 					<span class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
@@ -18,14 +20,13 @@
 					</span>
 
 					<span class="col-lg-3 col-md-3 col-sm-3 col-xs-6"><label for="bookName">书名：</label><input class="form-control inline-element padding-control" type="text" v-model.trim="bookName" placeholder="无需添加书名号" /></span>
-					<!-- <span class="col-lg-3 col-md-3 col-sm-3 col-xs-6"><label for="tags">分类：</label><input class="form-control inline-element padding-control" type="text" v-model.trim="tags" placeholder="计算机；互联网" /></span> -->
 				</div>
 					
 				<!-- row 2 -->
 				<div class="row">
 					<span class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<label for="message">留言：</label>
-						<input name="message" type="text" class="form-control description" v-model.trim="message" placeholder="谈谈你对这本书的感受 / 你为什么想要这本书？" />
+						<label for="description">留言：</label>
+						<input name="description" type="text" class="form-control description" v-model.trim="description" placeholder="谈谈你对这本书的感受 / 你为什么想要这本书？" />
 					</span>
 				</div>
 					
@@ -49,17 +50,18 @@
 			</div>
 		</div>
 	</div>
-
-
 </template>
 
 <script>
+
+	const username = localStorage.getItem('_username');
+
 	export default {
 		data(){
 			return {
 				infoType: 0,
 				bookName: '',
-				message: '',
+				description: '',
 				shareType: 1,
 				price: ''
 			}
@@ -93,6 +95,28 @@
 				return input == '' ? false : true;
 			},
 
+			// check length
+			checkLength(input, type){
+
+				let length = input.length;
+
+				switch(type){
+					// bookname description price
+					case 'bookName':
+						return length > 20 ? false : true;
+						break;
+					case 'description':
+						return length > 240 ? false : true;
+						break;
+					case 'price':
+						return length > 10 ? false : true;
+						break;
+					default:
+						alert('检验用户输入长度时出现问题，请联系劉凯里 :)');
+				}
+			},
+
+			// 用户点击“发布”时，先检测输入是否符合规则（非空，没有敏感字符）
 			checkAvailable(){
 				/*
 					1. 非空
@@ -100,38 +124,104 @@
 				*/
 				let checkFilled = this.checkFilled;
 				let checkLegal = this.checkLegal;
+				let checkLength = this.checkLength;
 
 				if (this.shareType == 1){
-					// bookname & message & price
-					let isEmpty = checkFilled(this.bookName) && checkFilled(this.message) && checkFilled(this.price);
-					let isLegal = checkLegal(this.bookName) && checkLegal(this.message) && checkLegal(this.price);
+					// bookname & description & price
+					let _filled = checkFilled(this.bookName) && checkFilled(this.description) && checkFilled(this.price);
+					let _length = checkLength(this.bookName, 'bookName') && checkLength(this.description, 'description') && checkLength(this.price, 'price');
+					let _legal = checkLegal(this.bookName) && checkLegal(this.description) && checkLegal(this.price);
 
-					return isEmpty && isLegal ? true : false;
+					return _filled && _legal && _length ? true : false;
 
 				} else {
-					// bookname & message
-					let isEmpty = checkFilled(this.bookName) && checkFilled(this.message);
-					let isLegal = checkLegal(this.bookName) && checkLegal(this.message);
+					// bookname & description
+					let _filled = checkFilled(this.bookName) && checkFilled(this.description);
+					let _length = checkLength(this.bookName, 'bookName') && checkLength(this.description, 'description')
+					let _legal = checkLegal(this.bookName) && checkLegal(this.description);
 					
-					return isEmpty && isLegal ? true : false;
+					return _filled && _legal && _length ? true : false;
 				}
 			},
 
+			/*
+			return {timestamp: '1231221231', date: '2017年3月10日'}
+			*/
+			getTimeObj(){
+				let currentTime = new Date();
+				let timestamp = currentTime.getTime();
+
+				let year = currentTime.getFullYear();
+				let month = currentTime.getMonth() + 1;
+				let day = currentTime.getDate();
+				let hours = currentTime.getHours().toString();
+				let minutes = currentTime.getMinutes().toString();
+				let date = year + '年' + month + '月' + day + '日 ' + (hours.length > 1 ? hours : '0' + hours) + ':' + (minutes.length > 1 ? minutes : '0' + minutes);
+
+				return {
+					timestamp, date
+				};
+			},
+
+			// 发送成功后，初始化数据
+			initDate(_this){
+				_this.bookName = '';
+				_this.description = '';
+				_this.price = '';
+			},
+
+			// “发布”
 			publish(){
 				/*
 					1. 通过检验
 					2. 发布
 				*/
 
-				let available = this.checkAvailable();
+				let that = this;
+
+				let available = that.checkAvailable();
 				if (!available){
-					$('.alert-danger').show('fast').delay(2500).hide('fast');
+					$('#input_danger').show('fast').delay(2500).hide('fast');
 					return;
 				}
 
-				console.log('publish !');
+				let timeObj = that.getTimeObj();
 
-				
+				let publishData = {
+					bookId: timeObj.timestamp,
+					date: timeObj.date,
+					username: username,
+					bookName: that.bookName,
+					description: that.description,
+					shareType: that.shareType,
+					infoType: that.infoType,
+					price: that.price
+				};
+
+				$.ajax({
+					url: './php/handle_publish.php',
+					type: 'POST',
+					data: publishData,
+					async: true,
+					timeout: 3000,
+					success(_response){
+						let response = JSON.parse(_response);
+						switch (response.ret){
+							case '0':
+								$('#publish_fail').text('发布失败：' + response.msg).show('fast').delay(2500).hide('fast');
+								break;
+							case '1':
+								that.initDate(that);
+								$('#publish_success').show('fast').delay(2500).hide('fast');
+								break;
+							default:
+								alert('出现了一点意外，请联系劉凯里 :)');
+						}
+					},
+					error(){
+						alert('发布请求失败，请重试或联系劉凯里 :)');
+					}
+				});
 			}
 		},
 
@@ -164,8 +254,7 @@
 		border: 1px solid #ccc;
 		padding: 20px 20px;
 		position: relative;
-		/* when done, switch to none ↓*/
-		display: block;
+		display: none;
 	}
 
 	.row-1{
