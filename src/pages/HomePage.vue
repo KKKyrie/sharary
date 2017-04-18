@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<SearchComponent></SearchComponent>
-		<PublishComponent></PublishComponent>
-		<WrapComponent></WrapComponent>
+		<PublishComponent @publishBook="publishListener"></PublishComponent>
+		<WrapComponent ref="wrapComponent"></WrapComponent>
 	</div>
 </template>
 
@@ -12,7 +12,13 @@
 	import WrapComponent from '../components/home/wrap-component.vue';
 
 	export default {
-		components: { SearchComponent, PublishComponent, WrapComponent }
+		components: { SearchComponent, PublishComponent, WrapComponent },
+
+		methods: {
+			publishListener(publishData){
+				this.$refs.wrapComponent.addBook(publishData);
+			}
+		}
 	}
 </script>
 

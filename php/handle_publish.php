@@ -1,12 +1,12 @@
 <?php
 
-	$book_id = @$_POST["bookId"];
+	$bookId = @$_POST["bookId"];
 	$date = @$_POST["date"];
 	$username = @$_POST["username"];
-	$bookname = @$_POST["bookName"];
+	$bookname = @$_POST["bookname"];
 	$description = @$_POST["description"];
-	$share_type = @$_POST["shareType"];
-	$info_type = @$_POST["infoType"];
+	$shareType = @$_POST["shareType"];
+	$infoType = @$_POST["infoType"];
 	$price = @$_POST["price"];
 
 	require_once("./mysql_connect.php");
@@ -15,7 +15,7 @@
 
 	$response = (object)array();
 
-	$sql = "insert into t_books (book_id, date, username, bookname, description, share_type, info_type, price) values ('$book_id', '$date', '$username', '$bookname', '$description', '$share_type', '$info_type', '$price')";
+	$sql = "insert into t_books (bookId, date, username, bookname, description, shareType, infoType, price) values ('$bookId', '$date', '$username', '$bookname', '$description', '$shareType', '$infoType', '$price')";
 
 	$res = @mysql_query($sql);
 

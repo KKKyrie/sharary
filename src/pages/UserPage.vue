@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1>userpage</h1>
+		<h3>我的发布</h3>
 		<WrapMineComponent></WrapMineComponent>
 	</div>
 </template>

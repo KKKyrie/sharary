@@ -2,7 +2,7 @@
     <transition name="bounce">
 		<div class="book-container container-fluid">
 			<!-- 右上角标志 -->
-			<CornerComponent :type="book.info_type"></CornerComponent>
+			<CornerComponent :type="book.infoType"></CornerComponent>
 
 
 
@@ -14,10 +14,10 @@
 				<br>
 				<span class="date">{{ book.date }}</span>
 				<!-- 删除按钮 -->
-				<a class="btn delete-btn pull-right" v-if="page === 'user'" data-toggle="modal" :data-target="'#myModal'+book.username+book.book_id">删除</a>
+				<a class="btn delete-btn pull-right" v-if="page === 'user'" data-toggle="modal" :data-target="'#myModal'+book.username+book.bookId">删除</a>
 
             	<!-- delete modal starts -->
-	            <div class="modal fade" :id="'myModal'+book.username+book.book_id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	            <div class="modal fade" :id="'myModal'+book.username+book.bookId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	                <div class="modal-dialog" role="document">
 	                    <div class="modal-content">
 	                        <div class="modal-header">
@@ -46,8 +46,8 @@
 			<!-- 共享方式 -->
 			<span class="share-type">
 				共享方式：
-				<span v-if="book.share_type == 0">交换</span>
-				<span v-if="book.share_type == 1">交易（{{book.price}}元）</span>
+				<span v-if="book.shareType == 0">交换</span>
+				<span v-if="book.shareType == 1">交易（{{book.price}}元）</span>
 			</span>
 
 			<!-- 联系区域 -->

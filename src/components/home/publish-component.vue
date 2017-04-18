@@ -19,7 +19,7 @@
 						</select>
 					</span>
 
-					<span class="col-lg-3 col-md-3 col-sm-3 col-xs-6"><label for="bookName">书名：</label><input class="form-control inline-element padding-control" type="text" v-model.trim="bookName" placeholder="无需添加书名号" /></span>
+					<span class="col-lg-3 col-md-3 col-sm-3 col-xs-6"><label for="bookname">书名：</label><input class="form-control inline-element padding-control" type="text" v-model.trim="bookname" placeholder="无需添加书名号" /></span>
 				</div>
 					
 				<!-- row 2 -->
@@ -60,7 +60,7 @@
 		data(){
 			return {
 				infoType: 0,
-				bookName: '',
+				bookname: '',
 				description: '',
 				shareType: 1,
 				price: ''
@@ -102,7 +102,7 @@
 
 				switch(type){
 					// bookname description price
-					case 'bookName':
+					case 'bookname':
 						return length > 20 ? false : true;
 						break;
 					case 'description':
@@ -128,17 +128,17 @@
 
 				if (this.shareType == 1){
 					// bookname & description & price
-					let _filled = checkFilled(this.bookName) && checkFilled(this.description) && checkFilled(this.price);
-					let _length = checkLength(this.bookName, 'bookName') && checkLength(this.description, 'description') && checkLength(this.price, 'price');
-					let _legal = checkLegal(this.bookName) && checkLegal(this.description) && checkLegal(this.price);
+					let _filled = checkFilled(this.bookname) && checkFilled(this.description) && checkFilled(this.price);
+					let _length = checkLength(this.bookname, 'bookname') && checkLength(this.description, 'description') && checkLength(this.price, 'price');
+					let _legal = checkLegal(this.bookname) && checkLegal(this.description) && checkLegal(this.price);
 
 					return _filled && _legal && _length ? true : false;
 
 				} else {
 					// bookname & description
-					let _filled = checkFilled(this.bookName) && checkFilled(this.description);
-					let _length = checkLength(this.bookName, 'bookName') && checkLength(this.description, 'description')
-					let _legal = checkLegal(this.bookName) && checkLegal(this.description);
+					let _filled = checkFilled(this.bookname) && checkFilled(this.description);
+					let _length = checkLength(this.bookname, 'bookname') && checkLength(this.description, 'description')
+					let _legal = checkLegal(this.bookname) && checkLegal(this.description);
 					
 					return _filled && _legal && _length ? true : false;
 				}
@@ -164,8 +164,8 @@
 			},
 
 			// 发送成功后，初始化数据
-			initDate(_this){
-				_this.bookName = '';
+			initData(_this){
+				_this.bookname = '';
 				_this.description = '';
 				_this.price = '';
 			},
@@ -191,7 +191,7 @@
 					bookId: timeObj.timestamp,
 					date: timeObj.date,
 					username: username,
-					bookName: that.bookName,
+					bookname: that.bookname,
 					description: that.description,
 					shareType: that.shareType,
 					infoType: that.infoType,
@@ -211,8 +211,9 @@
 								$('#publish_fail').text('发布失败：' + response.msg).show('fast').delay(2500).hide('fast');
 								break;
 							case '1':
-								that.initDate(that);
 								$('#publish_success').show('fast').delay(2500).hide('fast');
+								that.$emit('publishBook', publishData);
+								that.initData(that);
 								break;
 							default:
 								alert('出现了一点意外，请联系劉凯里 :)');

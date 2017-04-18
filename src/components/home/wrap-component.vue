@@ -52,6 +52,10 @@
 				}, 500, 3600000);
 			},
 
+			addBook(publishData){
+				this.bookList.unshift(publishData);
+			},
+
 			getBookList(){
 				let that = this;
 				$.ajax({

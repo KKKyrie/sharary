@@ -40,12 +40,12 @@
 	$create_table_books = mysql_query('create table t_books (
 		id int(5) null auto_increment primary key,
 		date varchar(50) not null,
-		book_id varchar(20) not null,
+		bookId varchar(20) not null,
 		username varchar(30) not null,
 		bookname varchar(30) not null,
 		description varchar(250) not null,
-		share_type int(1) not null,
-		info_type int(1) not null,
+		shareType int(1) not null,
+		infoType int(1) not null,
 		price varchar(15) not null default 0
 	)ENGINE=InnoDB DEFAULT CHARSET="utf8"');
 
@@ -64,7 +64,7 @@
 		date varchar(50) not null,
 		message varchar(100) not null,
 		bookname varchar(30) not null,
-		is_new int(1) not null default 1	
+		isNew int(1) not null default 1	
 	)ENGINE=InnoDB DEFAULT CHARSET="utf8"');
 
 	if (!$create_table_notice){
