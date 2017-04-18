@@ -19,6 +19,39 @@
 
 		methods: {
 
+			throttle(fn, delay, mustRunDelay){
+				let timer = null;
+				let t_start;
+				return function(){
+                    let context = this, args = arguments, t_curr = +new Date();
+                    clearTimeout(timer);
+                    if(!t_start){
+                        t_start = t_curr;
+                    }
+                    if(t_curr - t_start >= mustRunDelay){
+                        fn.apply(context, args);
+                        t_start = t_curr;
+                    }
+                    else {
+                        timer = setTimeout(function(){
+                            fn.apply(context, args);
+                        }, delay);
+                    }
+                };
+			},
+
+			initScroll(){
+				let that = this;
+				window.onscroll = that.throttle(function(){
+					let scrollPos = $(window).scrollTop();
+					let range = 50;
+					let totalHeight = parseFloat($(window).height()) + parseFloat(scrollPos);
+					if (($(document).height() - range) <= totalHeight){
+						that.getBookList();
+					}
+				}, 500, 3600000);
+			},
+
 			getBookList(){
 				let that = this;
 				$.ajax({
@@ -37,7 +70,13 @@
 								break;
 							case '1':
 								console.log(response.msg);
-								that.bookList = response.books;
+								if (response.books.length === 0){
+									$('.loading-hint').text('———— 已加载完全部书籍 ————');
+									return;
+								}else{
+									that.bookList = that.bookList.concat(response.books);
+									return;
+								}
 								break;
 							default:
 								alert('Ooops，出了点意外，请联系劉凯里 :)');
@@ -53,6 +92,7 @@
 
 		created(){
 			this.getBookList();
+			this.initScroll();
 		},
 
 		data(){

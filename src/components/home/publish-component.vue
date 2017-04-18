@@ -223,12 +223,6 @@
 					}
 				});
 			}
-		},
-
-		watch: {
-			price(val, preVal){
-				console.log('之前：'+ preVal + ', 之后: ' + val);
-			}
 		}
 	}
 </script>
