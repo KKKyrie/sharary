@@ -70,11 +70,9 @@
 								break;
 							case '1':
 								console.log(response.msg);
-								if (response.books.length === 0){
+								that.bookList = that.bookList.concat(response.books);
+								if (response.books.length < 3){
 									$('.loading-hint').text('———— 已加载完全部书籍 ————');
-									return;
-								}else{
-									that.bookList = that.bookList.concat(response.books);
 									return;
 								}
 								break;

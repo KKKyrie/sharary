@@ -72,11 +72,9 @@
 								break;
 							case '1':
 								console.log(response.msg);
-								if (response.books.length === 0){
+								that.myBookList = that.myBookList.concat(response.books);
+								if (response.books.length < 3){
 									$('.loading-hint').text('———— 已加载完你的全部书籍 ————');
-									return;
-								}else{
-									that.myBookList = that.myBookList.concat(response.books);
 									return;
 								}
 								break;
