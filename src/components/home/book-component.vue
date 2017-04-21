@@ -1,5 +1,5 @@
 <template>
-    <transition name="bounce">
+  <transition name="bounce">
 		<div class="book-container container-fluid">
 			<!-- 右上角标志 -->
 			<CornerComponent :type="book.infoType"></CornerComponent>
@@ -9,15 +9,15 @@
 			<!-- 头部区域 -->
 			<div class="title-area">
 				<h3>《{{ book.bookname }}》</h3>
-				
+
 
 				<br>
 				<span class="date">{{ book.date }}</span>
 				<!-- 删除按钮 -->
-				<a class="btn delete-btn pull-right" v-if="page === 'user'" data-toggle="modal" :data-target="'#myModal'+book.username+book.bookId">删除</a>
+				<a class="btn delete-btn pull-right" v-if="page === 'user'" data-toggle="modal" :data-target="'#myModal'+book.bookId">删除</a>
 
             	<!-- delete modal starts -->
-	            <div class="modal fade" :id="'myModal'+book.username+book.bookId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	            <div class="modal fade" :id="'myModal'+book.bookId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	                <div class="modal-dialog" role="document">
 	                    <div class="modal-content">
 	                        <div class="modal-header">
@@ -36,13 +36,13 @@
 	            </div>
             	<!-- delete modal ends -->
 			</div>
-			
+
 			<!-- 用户留言区 -->
 			<div class="message-area">
 				<h4>{{ book.username }}：</h4>
 				<p class="message">{{ book.description }}</p>
 			</div>
-			
+
 			<!-- 共享方式 -->
 			<span class="share-type">
 				共享方式：
@@ -58,9 +58,9 @@
 
 <script>
 
-	import CornerComponent from './corner-component.vue';
+  import CornerComponent from './corner-component.vue';
 	import ContactComponent from './contact-component.vue';
-	
+
 	export default {
 
 		props: ['page', 'book'],
@@ -111,7 +111,7 @@
 		font-size: 15px;
 		font-weight: bold;
 		color: #42b983;
-	}
+  }
 
 	.delete-btn{
 		display: inline-block;
