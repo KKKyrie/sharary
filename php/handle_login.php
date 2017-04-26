@@ -85,7 +85,7 @@
 		}else{
 			// 注册成功
 			$response -> ret = '2';
-			$response -> token = $password;
+			$response -> token = $_password;
 			die(json_encode($response));
 		}
 	}

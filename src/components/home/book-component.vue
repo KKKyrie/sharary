@@ -29,7 +29,7 @@
 	                        </div>
 	                        <div class="modal-footer">
 	                            <button type="button" class="btn btn-default" data-dismiss="modal">算了</button>
-	                            <button type="button" class="btn btn-danger" data-dismiss="modal">删除</button>
+	                            <button type="button" class="btn btn-danger" data-dismiss="modal" @click="deleteBook">删除</button>
 	                        </div>
 	                    </div>
 	                </div>
@@ -51,21 +51,29 @@
 			</span>
 
 			<!-- 联系区域 -->
-			<ContactComponent v-if="page ==='home'"></ContactComponent>
+			<ContactComponent v-if="page ==='home'" :receiver="book.username" :bookname="book.bookname"></ContactComponent>
 		</div>
 	</transition>
 </template>
 
 <script>
 
-  import CornerComponent from './corner-component.vue';
+    import CornerComponent from './corner-component.vue';
 	import ContactComponent from './contact-component.vue';
 
 	export default {
 
 		props: ['page', 'book'],
 
-		components: { CornerComponent, ContactComponent }
+		components: { CornerComponent, ContactComponent },
+
+        methods: {
+            deleteBook(){
+                let bookId = this.book.bookId;
+                let username = this.book.username;
+                this.$emit('deleteBookListener', bookId, username);
+            }
+        }
 	}
 
 </script>

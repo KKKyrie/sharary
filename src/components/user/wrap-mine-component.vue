@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="wrap-container col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
-				<BookComponent page="user" v-for="book in myBookList" :key="book.id" :book="book"></BookComponent>
+				<BookComponent @deleteBookListener="deleteBookListener" page="user" v-for="book in myBookList" :key="book.id" :book="book"></BookComponent>
 				<p class="loading-hint">正在加载...</p>
 			</div>
 		</div>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-	
+
 	import BookComponent from '../home/book-component.vue';
 
 	export default {
@@ -86,6 +86,44 @@
 						alert('请求失败，请重试或联系劉凯里 :)');
 					}
 				});
+			},
+
+			deleteBookListener(bookId, username){
+				let data = {
+					bookId,
+					username
+				};
+				let that = this;
+				$.ajax({
+					url: './php/handle_delete.php',
+					type: 'POST',
+					timeout: 3000,
+					async: true,
+					data: data,
+					success(_response){
+						let response = JSON.parse(_response);
+						switch(response.ret){
+							case '0':
+								console.error(response.msg);
+								break;
+							case '1':
+								console.log(response.msg);
+								// 删除成功
+								for (let i = 0; i < that.myBookList.length; i++){
+									if (that.myBookList[i].bookId === bookId){
+										that.myBookList.splice(i, 1);
+										break;
+									}
+								}
+								break;
+							default:
+								alert('Ooops, 出了点意外，请联系劉凯里 :)');
+						}
+					},
+					error(){
+						alert('请求失败，请重试或联系劉凯里 :)');
+					}
+				});
 			}
 
 		},
@@ -106,7 +144,7 @@
 </script>
 
 <style scoped>
-	
+
 	.wrap-container{
 		margin-top: 30px;
 		margin-bottom: 30px;
