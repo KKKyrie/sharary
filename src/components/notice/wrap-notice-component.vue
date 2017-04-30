@@ -47,7 +47,7 @@
 								console.log(response.msg);
 								that.noticeList = response.noticeList;
 								if (that.noticeList.length === 0){
-									$('.hint').text('———— 你暂时还没有收到消息 ————');
+									$('.hint').text('你暂时还没有收到消息');
 								}else{
 									$('.hint').text('———— 已加载全部消息 ————');
 								}

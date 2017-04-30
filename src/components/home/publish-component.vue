@@ -237,6 +237,15 @@
 				$('#errorMsg').text(msg);
 				$('#errorModal').modal('show');
 			}
+		},
+
+		watch: {
+			shareType(val, preVal){
+				let that = this;
+				if (val == '0'){
+					this.price = '';
+				}
+			}
 		}
 	}
 </script>

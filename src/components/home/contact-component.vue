@@ -10,9 +10,11 @@
 			<div ref="warning" class="alert alert-warning" role="alert" style="display: none;">最多输入100个字 :)</div>
 			<div ref="danger" class="alert alert-danger" role="alert" style="display: none;">输入含有非法字符 :)</div>
 			<div ref="success" class="alert alert-success" role="alert" style="display: none;">消息发送成功 :)</div>
-			<input type="text" class="form-control input-area" v-model.trim="message" placeholder="向 TA 发送你想说的话..." />
-			&nbsp;
-			<span class="glyphicon glyphicon-send send-btn" title="发送" @click="sendMsg"></span>
+			<div class="form-group">
+				<input type="text" class="form-control input-area" v-model.trim="message" placeholder="向 TA 发送你想说的话..." />
+				<span class="glyphicon glyphicon-send send-btn" title="发送" @click="sendMsg"></span>	
+			</div>
+			
 		</div>
 
 	</div>
