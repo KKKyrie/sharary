@@ -56,6 +56,10 @@
 				this.bookList.unshift(publishData);
 			},
 
+			handleSearch(searchResult){
+				this.bookList = searchResult;
+			},
+
 			getBookList(){
 				let that = this;
 				$.ajax({
@@ -71,6 +75,7 @@
 						switch(response.ret){
 							case '0':
 								console.error(response.msg);
+								that.showErrorModal('[获取书籍列表失败]: ' + response.msg + ' 请联系劉凯里 :)');
 								break;
 							case '1':
 								console.log(response.msg);
@@ -81,15 +86,21 @@
 								}
 								break;
 							default:
-								alert('Ooops，出了点意外，请联系劉凯里 :)');
+								that.showErrorModal('[加载书籍列表逻辑意外], 请联系劉凯里解决这个问题 :)');
 						}
 					},
 					error(){
-						alert('请求失败，请重试或联系劉凯里 :)');
+						that.showErrorModal('[请求超时或发送失败], 请检查设备的网络状态并重试 :)');
 					}
 				});
 			}
 
+		},
+
+		// display error modal
+		showErrorModal(msg){
+			$('#errorMsg').text(msg);
+			$('#errorModal').modal('show');
 		},
 
 		created(){

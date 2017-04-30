@@ -54,14 +54,14 @@
 								break;
 							case '0':
 								console.log(response.msg);
-								alert('查询出错，请刷新或联系劉凯里 :)');
+								that.showErrorModal('[获取消息失败]: ' + response.msg + ' 请联系劉凯里 :)');
 								break;
 							default:
-								alert('Ooops,出了点意外，请联系劉凯里 :)');
+								that.showErrorModal('[获取消息逻辑意外], 请联系劉凯里 :)');
 						}
 					},
 					error(){
-						alert('请求失败，请联系劉凯里 :)');
+						that.showErrorModal('[请求超时], 请检查设备的网络状态并重试 :)');
 					}
 				});
 			},
@@ -86,17 +86,23 @@
 								break;
 							case '0':
 								console.log(response.msg);
-								alert('阅读消息失败，请联系劉凯里 :)');
+								that.showErrorModal('[阅读消息失败]: ' + response.msg + ' 请联系劉凯里 :)');
 								break;
 							default:
-								alert('Ooops, 出了点意外，请联系劉凯里 :)');
+								that.showErrorModal('[阅读消息逻辑意外], 请联系劉凯里 :)');
 						}
 					},
 					error(){
-						alert('请求失败，请刷新或联系劉凯里 :)');
+						that.showErrorModal('[阅读消息失败], 请检查设备的网络状态并重试 :)');
 					}
 				});
 			}
+		},
+
+		// display error modal
+		showErrorModal(msg){
+			$('#errorMsg').text(msg);
+			$('#errorModal').modal('show');
 		},
 
 		created(){
@@ -121,8 +127,8 @@
 <style scoped>
 
 	.wrap{
-        margin:30px auto;
-        padding:20px;
+        margin: 0px auto;
+        padding: 20px;
     }
 
 

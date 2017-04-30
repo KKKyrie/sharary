@@ -1,6 +1,10 @@
 <template>
 	<div class="container-fluid">
 		<div class="row">
+			<h2 class="wrap-title">我的发布</h2>
+			<span class="glyphicon glyphicon-paperclip"></span>
+		</div>
+		<div class="row">
 			<div class="wrap-container col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
 				<BookComponent @deleteBookListener="deleteBookListener" page="user" v-for="book in myBookList" :key="book.id" :book="book"></BookComponent>
 				<p class="loading-hint">正在加载...</p>
@@ -69,6 +73,7 @@
 						switch(response.ret){
 							case '0':
 								console.error(response.msg);
+								that.showErrorModal('[获取书籍列表失败]: ' + response.msg + ' 请联系劉凯里 :)');
 								break;
 							case '1':
 								console.log(response.msg);
@@ -79,11 +84,11 @@
 								}
 								break;
 							default:
-								alert('Ooops，出了点意外，请联系劉凯里 :)');
+								that.showErrorModal('[获取书籍列表逻辑意外], 请联系劉凯里 :)');
 						}
 					},
 					error(){
-						alert('请求失败，请重试或联系劉凯里 :)');
+						that.showErrorModal('[请求超时], 请检查设备网络状态并重试 :)');
 					}
 				});
 			},
@@ -105,6 +110,7 @@
 						switch(response.ret){
 							case '0':
 								console.error(response.msg);
+								that.showErrorModal('[删除书籍失败]: ' + response.msg + ' 请联系劉凯里 :)');
 								break;
 							case '1':
 								console.log(response.msg);
@@ -117,15 +123,21 @@
 								}
 								break;
 							default:
-								alert('Ooops, 出了点意外，请联系劉凯里 :)');
+								that.showErrorModal('[删除书籍逻辑意外]: 请联系劉凯里 :)');
 						}
 					},
 					error(){
-						alert('请求失败，请重试或联系劉凯里 :)');
+						that.showErrorModal('[请求超时], 请检查设备网络状态并重试 :)');
 					}
 				});
 			}
 
+		},
+
+		// display error modal
+		showErrorModal(msg){
+			$('#errorMsg').text(msg);
+			$('#errorModal').modal('show');
 		},
 
 		created(){
@@ -144,6 +156,11 @@
 </script>
 
 <style scoped>
+
+	.wrap-title{
+		font-weight: bold;
+		display: inline-block;
+	}
 
 	.wrap-container{
 		margin-top: 30px;

@@ -132,20 +132,27 @@
 						switch (response.ret){
 							case '1':
 								console.log(response.msg);
-								$(that.$refs.success).show('fast').delay(2500).hide('fast');
+								$(that.$refs.success).show('fast').delay(3000).hide('fast');
 								that.message = '';
 								break;
 							case '0':
 								console.log(response.msg);
+								that.showErrorModal('[发送消息失败]: ' + response.msg + ' 请联系劉凯里 :)');
 								break;
 							default:
-								alert('出了点意外，请联系劉凯里 :)');
+								that.showErrorModal('[发送消息逻辑意外], 请联系劉凯里解决这个问题 :)');
 						}
 					},
 					error(){
-						alert('请求失败，请重试或联系劉凯里 :)');
+						that.showErrorModal('[请求超时或发送失败], 请在保证设备网络状态良好的情况下重试 :)');
 					}
 				});
+			},
+
+			// display error modal
+			showErrorModal(msg){
+				$('#errorMsg').text(msg);
+				$('#errorModal').modal('show');
 			}
 		}
 	}
