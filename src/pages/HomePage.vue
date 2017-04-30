@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="alert alert-info info" role="alert" style="display: none">你收到了<span class="num"></span>条消息，<router-link to="/notice">点击查看</router-link></div>
-		<SearchComponent></SearchComponent>
+		<SearchComponent @searchBook="searchListener"></SearchComponent>
 		<PublishComponent @publishBook="publishListener"></PublishComponent>
 		<WrapComponent ref="wrapComponent"></WrapComponent>
 	</div>
@@ -18,6 +18,10 @@
 		methods: {
 			publishListener(publishData){
 				this.$refs.wrapComponent.addBook(publishData);
+			},
+
+			searchListener(searchResult){
+				this.$refs.wrapComponent.handleSearch(searchResult);
 			},
 
 			getNoticeCount(){
@@ -45,17 +49,23 @@
 								break;
 							case '0':
 								console.log(response.msg);
-								alert('获取新消息失败，刷新或联系劉凯里 :)');
+								that.showErrorModal('[获取消息数量失败]: ' + response.msg + ' 请联系劉凯里 :)');
 								break;
 							default:
-								alert('Ooops, 出了点意外，请刷新或联系劉凯里 :)');
+								that.showErrorModal('[获取消息数量逻辑意外], 请联系劉凯里 :)');
 						}
 					},
 					error(){
-						alert('请求失败，请重试或联系劉凯里 :)');
+						that.showErrorModal('[请求超时], 请检查设备网络状态并重试 :)');
 					}
 				});
 			}
+		},
+
+		// display error modal
+		showErrorModal(msg){
+			$('#errorMsg').text(msg);
+			$('#errorModal').modal('show');
 		},
 
 		mounted(){

@@ -34,9 +34,9 @@
 					    <!-- Collect the nav links, forms, and other content for toggling -->
 					    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					      	<ul class="nav navbar-nav">
-					        	<li><router-link to="/">主页</router-link></li>
-					        	<li><router-link to="/notice">消息</router-link></li>
-					        	<li><router-link to="/user">个人</router-link></li>
+					        	<li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><router-link to="/">主页</router-link></li>
+					        	<li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><router-link to="/notice">消息</router-link></li>
+					        	<li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><router-link to="/user">个人</router-link></li>
 					      	</ul>
 					      	<p class="navbar-text navbar-right" style="margin-right: 10px;">Sharary，西北大学图书共享平台&nbsp;&nbsp;&nbsp;<span title="退出" class="glyphicon glyphicon-remove-sign" id="logout_btn" style="cursor: pointer; color: #ae2e2e;"></span></p>
 					    </div>
@@ -44,6 +44,28 @@
 				</nav>
 				<!-- bs navbar ends -->
 			</div>
+
+			<!-- error model starts -->
+			
+			<div class="modal fade" tabindex="-1" role="dialog" id="errorModal">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title">Ooops, 出错了 :(</h4>
+			      </div>
+			      <div class="modal-body">
+			        <p id="errorMsg"></p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal" style="background-color: #ae2e2e;">好嘞</button>
+			      </div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+
+			<!-- error model ends -->
+			
 			<router-view></router-view>
 			<nav class="navbar navbar-default navbar-fixed-bottom footer" style="background-color: #2c3e50; text-align: center; color: white;">
 				<br />
