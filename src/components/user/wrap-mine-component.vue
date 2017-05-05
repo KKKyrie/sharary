@@ -79,7 +79,7 @@
 								console.log(response.msg);
 								that.myBookList = that.myBookList.concat(response.books);
 								if (response.books.length < 3){
-									$('.loading-hint').text('———— 已加载完你的全部书籍 ————');
+									$('.loading-hint').text('—— 我是有底线的 ——');
 									return;
 								}
 								break;
