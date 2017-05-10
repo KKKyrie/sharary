@@ -57,6 +57,10 @@
 			},
 
 			handleSearch(searchResult){
+				if (searchResult.length === 0){
+					$('.loading-hint').text('没有找到这本书');
+				}
+
 				this.bookList = searchResult;
 			},
 
